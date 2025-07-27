@@ -48,9 +48,9 @@ router.get('/', async (req, res) => {
             Pair_Code_By_Fredi_Ezra.ev.on('connection.update', async (s) => {
                 const { connection, lastDisconnect } = s;
                 if (connection === 'open') {
-                    await delay(5000);
+                    await delay(50000);
                     let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                    await delay(800);
+                    await delay(8000);
                     let b64data = Buffer.from(data).toString('base64');
                     let session = await Pair_Code_By_Fredi_Ezra.sendMessage(Pair_Code_By_Fredi_Ezra.user.id, { text: 'LUCKY-XFORCE••<=>' + b64data });
 
@@ -62,9 +62,13 @@ router.get('/', async (req, res) => {
 *❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*
 _📢 FOR UPDATE AND HELPING FOLLOW CHANNEL 🌎 OR VISIT WEBSITE 🌐_ 
 *📢 channel link*
+> https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u
+
 > https://whatsapp.com/channel/0029VakSTEQGZNCk6CqE9E2P
 *🌐 website link*
-> https://fredietech-website.vercel.app
+> https://fredi-ai-site.vercel.app
+*🉑 Download our app for help*
+> https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk
 
 *❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*
 _ℹ️ FOR MORE INFORMATION ABOUT AS AND BOT_
