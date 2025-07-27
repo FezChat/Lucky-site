@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -6,86 +7,113 @@
   <title>LUCKY MD XFORCE PAGE</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
+  <style>
     :root {
-      --primary: linear-gradient(135deg, #FF4500, #228B22);
-      --bg: #202020;
-      --glass: rgba(255, 255, 255, 0.05);
-      --text: #ffffff;
-      --muted: #00ffe7;
-      --highlight: #1E90FF;
-      --radius: 16px;
-      --blur: 12px;
-      --transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      --glow: 0 0 15px rgba(0, 212, 255, 0.3);
+      --primary-color: #007bff;
+      --secondary-color: #6c757d;
+      --accent-color: #28a745;
+      --text-color: #e0e0e0;
+      --background-color: #1a1a2e;
+      --card-background: rgba(25, 25, 40, 0.7);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --glass-effect: rgba(255, 255, 255, 0.08);
+      --shadow-color: rgba(0, 0, 0, 0.6);
+      --button-hover-bg: rgba(0, 123, 255, 0.2);
+      --gradient-primary: linear-gradient(135deg, #007bff, #28a745);
+      --glow-effect: 0 0 15px rgba(0, 123, 255, 0.4);
+      --border-radius: 12px;
+      --transition-speed: 0.3s ease;
+      --input-bg: rgba(255, 255, 255, 0.05);
     }
-
+    body.light-mode {
+      --text-color: #333;
+      --background-color: #f0f2f5;
+      --card-background: #ffffff;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --glass-effect: rgba(0, 0, 0, 0.05);
+      --shadow-color: rgba(0, 0, 0, 0.15);
+      --button-hover-bg: rgba(0, 123, 255, 0.1);
+      --input-bg: rgba(0, 0, 0, 0.05);
+    }
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: 'JetBrains Mono', monospace;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--background-color);
+      color: var(--text-color);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       line-height: 1.6;
+      transition: var(--transition-speed);
+      overflow-x: hidden;
     }
-
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 1.5rem 3rem;
-      background: var(--glass);
-      backdrop-filter: blur(var(--blur));
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--glass-effect);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 4px 15px var(--shadow-color);
     }
-
-    .logo {
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .profile-photo {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 0 6px var(--primary-color);
+    }
+    .profile-info h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       letter-spacing: 1px;
-      background: var(--primary);
+      background: var(--gradient-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: var(--glow);
+      text-shadow: var(--glow-effect);
     }
-
-    .status {
+    .profile-info p {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+    .status-bar {
       display: flex;
-      gap: 1.5rem;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
-
     .status-item {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
       display: flex;
       align-items: center;
       gap: 0.7rem;
       font-size: 0.9rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: var(--transition);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      background: var(--card-background);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 8px var(--shadow-color);
+      transition: var(--transition-speed);
+      color: var(--text-color);
     }
-
-    .status-item:hover {
-      background: rgba(0, 212, 255, 0.1);
-      border-color: var(--highlight);
-    }
-
     .status-item i {
-      color: var(--highlight);
+      color: var(--primary-color);
     }
-
     main {
       flex: 1;
       padding: 3rem;
@@ -94,7 +122,6 @@
       align-items: center;
       gap: 2.5rem;
     }
-
     .tools {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -102,228 +129,151 @@
       width: 100%;
       max-width: 1200px;
     }
-
     .tool {
-      background: var(--glass);
-      backdrop-filter: blur(var(--blur));
-      border-radius: var(--radius);
+      background: var(--card-background);
+      backdrop-filter: blur(8px);
+      border-radius: var(--border-radius);
       padding: 2rem;
       text-align: center;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
-      transition: var(--transition);
+      box-shadow: 0 10px 30px var(--shadow-color);
+      transition: var(--transition-speed);
       cursor: pointer;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-
-    .tool::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: var(--transition);
-    }
-
     .tool:hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), var(--glow);
-      border-color: rgba(0, 212, 255, 0.2);
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 45px var(--shadow-color), var(--glow-effect);
+      border-color: var(--primary-color);
     }
-
-    .tool:hover::before {
-      opacity: 1;
-    }
-
     .tool i {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin-bottom: 1rem;
-      display: block;
-      background: var(--primary);
+      background: var(--gradient-primary);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      transition: var(--transition);
+      transition: var(--transition-speed);
     }
-
     .tool h3 {
       font-family: 'Orbitron', sans-serif;
       font-weight: 600;
       margin-bottom: 0.5rem;
       letter-spacing: 1px;
+      color: var(--text-color);
     }
-
-    .muted {
-      color: var(--muted);
+    .tool p {
+      color: var(--secondary-color);
       font-size: 0.9rem;
     }
-
-    .note {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 1rem;
-      text-align: center;
-      max-width: 800px;
-      padding: 1rem;
-      border-radius: var(--radius);
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .note a {
-      color: var(--highlight);
-      text-decoration: none;
+    .modern-btn {
+      padding: 12px 20px;
+      border: none;
       font-weight: 600;
-      transition: var(--transition);
-    }
-
-    .note a:hover {
-      text-shadow: 0 0 10px var(--highlight);
-    }
-
-    .music-player {
-      width: 100%;
-      max-width: 1000px;
-      background: var(--glass);
-      border-radius: var(--radius);
-      padding: 2rem;
-      backdrop-filter: blur(var(--blur));
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .music-player h2 {
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 1.5rem;
-      letter-spacing: 1px;
-      background: var(--primary);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
-
-    .track {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 1.2rem;
-      border-radius: var(--radius);
-      margin-bottom: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: var(--transition);
-    }
-
-    .track:hover {
-      background: rgba(0, 0, 0, 0.4);
-      border-color: rgba(0, 212, 255, 0.2);
-    }
-
-    .progress {
-      width: 300px;
-      height: 6px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .progress-fill {
-      width: 0%;
-      background: linear-gradient(90deg, #FF4500, #228B22);
-      height: 100%;
-      transition: width 0.1s linear;
-      position: relative;
-    }
-
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: -2px;
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      transform: translateX(50%);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .track:hover .progress-fill::after {
-      opacity: 1;
-    }
-
-    button {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--highlight);
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
+      border-radius: 10px;
+      background: var(--gradient-primary);
       color: white;
       cursor: pointer;
-      font-weight: 600;
-      font-family: 'JetBrains Mono', monospace;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 4px 12px var(--shadow-color);
     }
-
-    button:hover {
-      background: rgba(0, 212, 255, 0.1);
-      box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+    .modern-btn:hover {
+      background: linear-gradient(135deg, #006ae6, #1a9e3d);
       transform: scale(1.05);
     }
-
-    .controls {
+    .modern-btn.outline {
+      background: none;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+    .modern-btn.outline:hover {
+      background: var(--primary-color);
+      color: #fff;
+    }
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--primary-color);
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--text-color);
+      margin-left: 10px;
+      white-space: nowrap;
+    }
+    .menu-footer {
+      padding: 15px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--secondary-color);
+      border-top: 1px solid var(--border-color);
+      margin-top: auto;
+      background: var(--glass-effect);
+      backdrop-filter: blur(8px);
+    }
+    .contact-fab {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: var(--accent-color);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 24px;
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      justify-content: center;
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+      z-index: 1000;
+      transition: var(--transition-speed);
+      text-decoration: none;
     }
-
-    .time {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--muted);
-      min-width: 50px;
-      text-align: center;
+    .contact-fab:hover {
+      background: #218838;
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
     }
-
-    @media (max-width: 768px) {
-      header {
-        padding: 1rem 1.5rem;
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      main {
-        padding: 1.5rem;
-      }
-      
-      .tools {
-        grid-template-columns: 1fr;
-      }
-      
-      .track {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-      }
-      
-      .progress {
-        width: 100%;
-      }
-      
-      .controls {
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-       .menu-footer {
+ 
+   .menu-footer {
       padding: 15px;
       text-align: center;
       font-size: 12px;
@@ -345,7 +295,7 @@
       position: fixed;
       bottom: 15px;
       left: 15px;
-      background: var(--red-primary);
+      background: var(--gradient-primary);
       width: 50px;
       height: 50px;
       border-radius: 50%;
@@ -367,89 +317,44 @@
         font-size: 13px;
       }
     }
-  </style>  
+  </style>
 </head>
 <body>
   <header>
-    <div class="logo">Fredi_Ezra</div>
-    <div class="status">
-      <div class="status-item"><i class="fas fa-bolt"></i> <span id="battery">--%</span></div>
-      <div class="status-item"><i class="fas fa-wifi"></i> <span id="ip">Loading...</span></div>
+    <div class="profile-section">
+      <img src="https://files.catbox.moe/ca2iy1.jpg" alt="Profile" class="profile-photo">
+      <div class="profile-info">
+        <h1>Lucky Xforce</h1>
+        <p>Welcome to Fredi Ai</p>
+      </div>
     </div>
   </header>
 
   <main>
-    <div class="tools">
-      <div class="tool" onclick="window.open(`/pair`)">
-        <i class="fas fa-link"></i>
-        <h3>PAIR CODE</h3>
-        <p class="muted">Connect to WhatsApp by pairing your code</p>
-      </div>
-      <div class="tool" onclick="window.open(`/qr`)">
-        <i class="fas fa-qrcode"></i>
-        <h3>QR CODE</h3>
-        <p class="muted">Alternative connection with scanning your device</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://github.com/mr-X-force/LUCKY-MD-XFORCE`)">
-        <i class="fab fa-github"></i>
-        <h3>Open Lucky Md Xforce Bot new vision updated by FredieTech/frediezra with 300+ commands</h3>
-        <p class="muted">Lucky Xforce Repo</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://github.com/Fred1e/LUCKY-MD`)">
-        <i class="fab fa-github"></i>
-        <h3>Open Lucky Md Bot old vision updated by FredieTech/frediezra have more than 600 commands</h3>
-        <p class="muted">Lucky Md Old Repo</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://fredietech.vercel.app`)">
-        <i class="fab fa-page"></i>
-        <h3>Support Owner FredieTech Website Page by follow</h3>
-        <p class="muted">Owner Website</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://wa.me/255752593977?text=hellow sir`)">
-        <i class="fas fa-headset"></i>
-        <h3>CONTACT OWNER</h3>
-        <p class="muted">Developer and Support your project</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T`)">
-        <i class="fas fa-broadcast-tower"></i>
-        <h3>WA CHANNEL</h3>
-        <p class="muted">Get all Bots Update and New Script here</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://www.facebook.com/FrediEzra`)">
-        <i class="fab fa-facebook"></i>
-        <h3>Support Owner Facebook Page by follow</h3>
-        <p class="muted">Facebook Page</p>
-      </div>
-      <div class="tool" onclick="window.open(`https://www.instagram.com/frediezra`)">
-        <i class="fab fa-instagram"></i>
-        <h3>Support Owner Instagram Page by follow</h3>
-        <p class="muted">Instagram Page</p>
-      </div>
+    <div class="status-bar">
+      <div class="status-item"><i class="fas fa-clock"></i> <span id="clock">--:--:--</span></div>
+      <div class="status-item"><i class="fas fa-calendar-day"></i> <span id="date">--</span></div>
+      <div class="status-item"><i class="fas fa-laptop-code"></i> <span id="browserOS">Browser: --</span></div>
+      <div class="status-item"><i class="fas fa-network-wired"></i> <span id="ipAddress">IP: --</span></div>
+      <div class="status-item"><i class="fas fa-bolt"></i> <span id="batteryLevel">Battery: --%</span></div>
+      <div class="status-item"><i class="fas fa-wifi"></i> <span id="networkSpeed">Speed: --</span></div>
+      <div class="status-item"><i class="fas fa-globe"></i> <span id="timezone">TimeZone: --</span></div>
     </div>
+    
+    <button class="modern-btn" onclick="/pair">PAIR CODE</button>
+<button class="modern-btn" onclick="/frediqr">QR CODE</button>
+<button class="modern-btn" onclick="https://github.com/mr-X-force/LUCKY-MD-XFORCE">Lucky Xforce</button>
+<button class="modern-btn" onclick="https://github.com/Fred1e/LUCKY-MD">Lucky Md</button>
+<button class="modern-btn" onclick="window.open('https://fredi-ai-site.vercel.app">Website</button>
+<button class="modern-btn" onclick="https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk">Our Apk</button>
+<button class="modern-btn" onclick="https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f">Wa Channel 1</button>
+<button class="modern-btn" onclick="https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u">Wa Channel 2</button>
+<button class="modern-btn" onclick="https://www.facebook.com/FrediEzra">Facebook Page</button>
+<button class="modern-btn" onclick="https://www.instagram.com/frediezra">Instagram Page</button>
 
-    <div class="note">
-      If you encounter any issues, please contact the developer for support.🤝
-    </div>
-
-    <div class="music-player">
-      <h2>NOW PLAYING</h2>
-      <div class="track">
-        <div>
-          <strong>Lucky Md Song</strong>
-          <div class="muted">Dev FredieEzra</div>
-        </div>
-        <div class="controls">
-          <button onclick="togglePlay('audio1')"><i class="fas fa-play"></i> PLAY</button>
-          <div class="progress"><div class="progress-fill" id="progress1"></div></div>
-          <span class="time" id="time1">0:00</span>
-        </div>
-        <audio id="audio1" src="https://files.catbox.moe/tkjzh7.m4a"></audio>
-      </div>
-    </div>
-      
-        <!-- FOOTER -->
+  <!-- FOOTER -->
   <div class="menu-footer">
-            © 2025 FREDI AI  | ALL RIGHT RESERVED 
+            © 2025 FREDI AI LUCKY SITE | ALL RIGHT RESERVED 
         </div>
 
   <!-- CONTACT ICON -->
@@ -457,120 +362,62 @@
     <i class="fas fa-headset"></i>
   </a>
   </main>
+
   <script>
-    // Smooth animations
-    document.addEventListener('DOMContentLoaded', () => {
-      document.body.style.opacity = '0';
-      setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-      }, 100);
-    });
+    // CLOCK
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const day = now.toLocaleString('en-US', { weekday: 'short' });
+      const date = now.toLocaleString('en-US', { day: '2-digit', month: 'short', year: 'numeric' });
 
-    // Update clock in title
-    const updateTime = () => {
-      const update = () => {
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
-        document.title = `LUCKY XFORCE | ${timeStr}`;
-      };
-      update();
-      setInterval(update, 1000);
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+      document.getElementById('date').textContent = `${day}, ${date}`;
     }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-    // Battery status
-    const updateBattery = async () => {
-      if (navigator.getBattery) {
-        try {
-          const battery = await navigator.getBattery();
-          const setBattery = () => {
-            const batteryPercent = Math.round(battery.level * 100);
-            const batteryElement = document.getElementById('battery');
-            batteryElement.innerText = `${batteryPercent}%`;
-            
-            // Add battery icon based on level
-            let batteryIcon = 'fa-bolt';
-            if (batteryPercent <= 20) batteryIcon = 'fa-battery-quarter';
-            else if (batteryPercent <= 50) batteryIcon = 'fa-battery-half';
-            else if (batteryPercent <= 80) batteryIcon = 'fa-battery-three-quarters';
-            else if (batteryPercent <= 100) batteryIcon = 'fa-battery-full';
-            
-            batteryElement.previousElementSibling.className = `fas ${batteryIcon}`;
-          };
-          
-          battery.addEventListener('levelchange', setBattery);
-          battery.addEventListener('chargingchange', setBattery);
-          setBattery();
-        } catch (error) {
-          console.error('Battery API error:', error);
+    // Battery Info
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        function updateBattery() {
+          document.getElementById('batteryLevel').textContent = `Battery: ${Math.round(battery.level * 100)}%`;
         }
-      }
-    }
-
-    // Music player controls
-    const togglePlay = (id) => {
-      const audio = document.getElementById(id);
-      const progress = document.getElementById('progress1');
-      const time = document.getElementById('time1');
-      const button = document.querySelector('button[onclick*="'+id+'"]');
-      
-      if (audio.paused) {
-        audio.play();
-        button.innerHTML = '<i class="fas fa-pause"></i> PAUSE';
-        
-        audio.ontimeupdate = () => {
-          const percent = (audio.currentTime / audio.duration) * 100;
-          progress.style.width = percent + '%';
-          
-          const minutes = Math.floor(audio.currentTime / 60);
-          const seconds = Math.floor(audio.currentTime % 60);
-          time.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
-        };
-        
-        audio.onended = () => {
-          progress.style.width = '0%';
-          time.textContent = '0:00';
-          button.innerHTML = '<i class="fas fa-play"></i> PLAY';
-        };
-      } else {
-        audio.pause();
-        button.innerHTML = '<i class="fas fa-play"></i> PLAY';
-      }
-    }
-
-    // IP address fetch
-    const fetchIP = async () => {
-      try {
-        const res = await fetch('https://api.ipify.org?format=json');
-        const data = await res.json();
-        document.getElementById('ip').textContent = data.ip;
-      } catch {
-        document.getElementById('ip').textContent = 'Offline';
-      }
-    }
-
-    // Tool hover effects
-    const setupToolHover = () => {
-      const tools = document.querySelectorAll('.tool');
-      tools.forEach(tool => {
-        tool.addEventListener('mouseenter', () => {
-          tool.style.transform = 'translateY(-8px)';
-        });
-        tool.addEventListener('mouseleave', () => {
-          tool.style.transform = 'translateY(0)';
-        });
+        updateBattery();
+        battery.addEventListener('levelchange', updateBattery);
       });
     }
 
-    // Initialize everything
-    const init = () => {
-      updateTime();
-      updateBattery();
-      fetchIP();
-      setupToolHover();
-    };
+    // Network info
+    if (navigator.connection) {
+      const conn = navigator.connection;
+      const speed = conn.downlink || 'N/A';
+      const type = conn.effectiveType || 'unknown';
+      document.getElementById('networkSpeed').textContent = `Speed: ${speed} Mbps (${type})`;
+    }
 
-    window.addEventListener('load', init);
+    // Timezone
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    document.getElementById('timezone').textContent = `TimeZone: ${timezone}`;
+
+    // Browser + OS Info
+    const ua = navigator.userAgent;
+    const browserMatch = ua.match(/(firefox|msie|chrome|safari|edg|opr)/i);
+    const osMatch = ua.match(/\(([^)]+)\)/);
+    const browser = browserMatch ? browserMatch[0] : "Unknown";
+    const os = osMatch ? osMatch[1] : "Unknown OS";
+    document.getElementById('browserOS').textContent = `Browser: ${browser}, OS: ${os}`;
+
+    // IP address
+    fetch("https://api.ipify.org?format=json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('ipAddress').textContent = `IP: ${data.ip}`;
+      }).catch(() => {
+        document.getElementById('ipAddress').textContent = `IP: Error`;
+      });
   </script>
 </body>
-  </html>
+</html>
