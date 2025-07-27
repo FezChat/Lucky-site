@@ -91,28 +91,27 @@
       font-size: 0.85rem;
       color: var(--secondary-color);
     }
+    
     .status-bar {
       display: flex;
-      align-items: center;
-      gap: 1.2rem;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: #1e1e2f;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.95rem;
     }
+
     .status-item {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
-      font-size: 0.9rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      background: var(--card-background);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 2px 8px var(--shadow-color);
-      transition: var(--transition-speed);
-      color: var(--text-color);
-    }
-    .status-item i {
-      color: var(--primary-color);
+      gap: 0.5rem;
+      background: #2c2c3e;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      min-width: 160px;
     }
     main {
       flex: 1;
@@ -341,16 +340,29 @@
       <div class="status-item"><i class="fas fa-globe"></i> <span id="timezone">TimeZone: --</span></div>
     </div>
     
-    <button class="modern-btn" onclick="window.open('/pair')">PAIR CODE</button>
-<button class="modern-btn" onclick="window.open('/frediqr')">QR CODE</button>
-<button class="modern-btn" onclick="https://github.com/mr-X-force/LUCKY-MD-XFORCE">Lucky Xforce</button>
-<button class="modern-btn" onclick="https://github.com/Fred1e/LUCKY-MD">Lucky Md</button>
-<button class="modern-btn" onclick="window.open('https://fredi-ai-site.vercel.app">Website</button>
-<button class="modern-btn" onclick="https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk">Our Apk</button>
-<button class="modern-btn" onclick="https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f">Wa Channel 1</button>
-<button class="modern-btn" onclick="https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u">Wa Channel 2</button>
-<button class="modern-btn" onclick="https://www.facebook.com/FrediEzra">Facebook Page</button>
-<button class="modern-btn" onclick="https://www.instagram.com/frediezra">Instagram Page</button>
+    <button class="modern-btn" onclick="window.open('/pair')"><i class="fab fa-plug" style="margin-right: 6px;"></i>PAIR CODE</button>
+
+<button class="modern-btn" onclick="window.open('/frediqr')"><i class="fab fa-qrcode" style="margin-right: 6px;"></i>QR CODE</button>
+
+<button class="modern-btn" onclick="window.open('https://github.com/mr-X-force/LUCKY-MD-XFORCE')"><i class="fab fa-github" style="margin-right: 6px;"></i>Lucky Xforce</button>
+
+<button class="modern-btn" onclick="window.open('https://github.com/Fred1e/LUCKY-MD')"><i class="fab fa-github" style="margin-right: 6px;"></i>Lucky Md</button>
+
+<button class="modern-btn" onclick="window.open('https://fredi-ai-site.vercel.app')"><i class="fab fa-globe" style="margin-right: 6px;"></i>Website</button>
+
+<button class="modern-btn" onclick="window.open('https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk')"><i class="fab fa-mobile-alt" style="margin-right: 6px;"></i>Our Apk</button>
+
+<button class="modern-btn" onclick="window.open('https://whatsapp.com/channel/0029VaihcQv84Om8LP59fO3f')"><i class="fab fa-whatsapp" style="margin-right: 6px;"></i>Wa Channel 1</button>
+
+<button class="modern-btn" onclick="window.open('https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u')"><i class="fab fa-whatsapp" style="margin-right: 6px;"></i>Wa Channel 2</button>
+
+<button class="modern-btn" onclick="window.open('https://www.facebook.com/FrediEzra')"><i class="fab fa-facebook" style="margin-right: 6px;"></i>Facebook</button>
+
+<button class="modern-btn" onclick="window.open('https://www.instagram.com/frediezra')"><i class="fab fa-instagram" style="margin-right: 6px;"></i>Instagram</button>
+
+<button class="modern-btn" onclick="window.open('https://twitter.com/frediezra')"><i class="fab fa-twitter" style="margin-right: 6px;"></i>X/Twitter</button>
+
+<button class="modern-btn" onclick="window.open('https://threads.com/frediezra')"><i class="fab fa-comments" style="margin-right: 6px;"></i>Threads</button>
 
   <!-- FOOTER -->
   <div class="menu-footer">
