@@ -59,36 +59,59 @@ router.get('/', async (req, res) => {
 				   let session = await Qr_Code_By_Fredi_Ezra.sendMessage(Qr_Code_By_Fredi_Ezra.user.id, { text: 'LUCKY-XFORCE••<=>' + b64data });
 	
 				   let LUCKY_MD_XFORCE_TEXT = `
-*❒❒❒❒❒❒❒❒❒❒❒❒❒*
+*═════════════════════*
 
-*CONGRATULATIONS 👏 LUCKY XFORCE MULTI DEVICE 🗡️ IS CONNECTED TO YOUR WHATSAPP🤞*
+🎉 *CONGRATULATIONS!* 🎉  
+🔥 *LUCKY XFORCE MULTI DEVICE* 🗡️  
+*Successfully Connected* to your WhatsApp 📱✨  
+Welcome to a world of automation, power & freedom! 🚀💬
 
-*❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*
-_📢 FOR UPDATE AND HELPING FOLLOW CHANNEL 🌎 OR VISIT WEBSITE 🌐_ 
-*📢 channel link*
+*═════════════════════*
+
+📢 *Stay Updated & Get Support*  
+👉 Join Our Official Channel  
+🌍 Tech Tips | Bot News | Live Help  
+🔗  
+> https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u  
+
 > https://whatsapp.com/channel/0029VakSTEQGZNCk6CqE9E2P
-*🌐 website link*
-> https://fredietech-website.vercel.app
 
-*❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*
-_ℹ️ FOR MORE INFORMATION ABOUT AS AND BOT_
+🌐 *Visit Our Official Website*  
+https://fredi-ai-site.vercel.app
 
-*👤 main GitHub info* @follow
-> https://GitHub.com/Fred1e 
-*👤 sub GitHub info* @follow
-> https://GitHub.com/mr-X-force 
-*🆕 new version of lucky md
+📲 *Download Our App – Fredi AI*  
+Smart Tools | Instant Help | Cool Features  
+🔗  
+> https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk
+
+*═════════════════════*
+
+🧠 *Want to Learn More?*  
+🔧 GitHub Info & Source Codes  
+👤 Main Repo — @Fred1e  
+> https://github.com/Fred1e
+
+👤 XFORCE Repo — @mr-X-force  
+> https://github.com/mr-X-force
+
+🆕 New Version:  
 > https://github.com/mr-X-force/LUCKY-MD-XFORC
-*🗝️ old version of lucky md*
-> https://github.com/Fred1e/LUCKY_MD
-> Don't forget 😜 fork 🍴 and star 🌟 repo
-*All is safe on heroku 🟢*
 
-*❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*
- _💬 for any problem connect with me_
-> https://wa.me/255752593977
-*THIS PROJECT SCRIPTS CREATED BY FREDIETECH*
-*❒❒❒❒❒❒❒❒❒❒❒❒❒❒❒*`
+🗝️ Old Version:  
+> https://github.com/Fred1e/LUCKY_MD  
+✨ Don’t forget to ⭐ Star & 🍴 Fork!
+
+✅ Hosted Securely on *Heroku*
+
+*═════════════════════*
+
+💬 *Need Help? Message Me Anytime:*  
+> 📞 https://wa.me/255752593977
+
+👨‍💻 *This Project Was Built by*  
+*FREDIETECH / FREDI AI™*
+
+*═════════════════════*`
 	 await Qr_Code_By_Fredi_Ezra.sendMessage(Qr_Code_By_Fredi_Ezra.user.id,{text:LUCKY_MD_XFORCE_TEXT},{quoted:session})
 
 
