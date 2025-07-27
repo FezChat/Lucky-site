@@ -111,7 +111,7 @@ Smart Tools | Instant Help | Cool Features
 👨‍💻 *This Project Was Built by*  
 *FREDIETECH / FREDI AI™*
 
-*═════════════════════*`
+*═════════════════════*`;
 	 await Qr_Code_By_Fredi_Ezra.sendMessage(Qr_Code_By_Fredi_Ezra.user.id,{text:LUCKY_MD_XFORCE_TEXT},{quoted:session})
 
 
