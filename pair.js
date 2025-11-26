@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
                 },
                 printQRInTerminal: false,
                 logger: pino({ level: 'fatal' }).child({ level: 'fatal' }),
-                browser: Browsers.macOS('safari')
+                browser: Browsers.macOS('chrome')
             });
 
             if (!Pair_Code_By_Fredi_Ezra.authState.creds.registered) {
