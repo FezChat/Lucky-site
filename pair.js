@@ -11,7 +11,7 @@ const {
     delay,
     makeCacheableSignalKeyStore,
     Browsers
-} = require('@fredi/baileys');
+} = require('@whiskeysokets/baileys');
 
 function removeFile(FilePath) {
     if (!fs.existsSync(FilePath)) return false;
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
                 },
                 printQRInTerminal: false,
                 logger: pino({ level: 'fatal' }).child({ level: 'fatal' }),
-                browser: Browsers.macOS('Chrome')
+                browser: Browsers.macOS('safari')
             });
 
             if (!Pair_Code_By_Fredi_Ezra.authState.creds.registered) {
