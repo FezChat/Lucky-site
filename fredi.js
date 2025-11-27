@@ -15,7 +15,7 @@ app.use('/pair', async (req, res, next) => {
     res.sendFile(__path + '/fredipair.html')
 });
 
-app.use('/qr', async (req, res, next) => {
+app.use('/frediqr', async (req, res, next) => {
     res.sendFile(__path + '/frediqr.html')
 });
 
@@ -35,7 +35,7 @@ app.listen(PORT, () => {
 ║  Server running on port: ${PORT}     ║
 ║  Main Dashboard: /               ║
 ║  Pair Dashboard: /pair           ║
-║  QR Dashboard: /qr               ║
+║  QR Dashboard: /frediqr               ║
 ║                                  ║
 ║  Join our WhatsApp channel for   ║
 ║        more updates!             ║
