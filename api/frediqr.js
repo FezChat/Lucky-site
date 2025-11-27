@@ -23,9 +23,7 @@ function removeFile(FilePath) {
 		force: true
 	})
 };
-const {
-	readFile
-} = require("node:fs/promises")
+
 router.get('/', async (req, res) => {
 	const id = makeid();
 	async function LUCKY_MD_XFORCE_QR_CODE() {
@@ -50,8 +48,12 @@ router.get('/', async (req, res) => {
 					lastDisconnect,
 					qr
 				} = s;
-				if (qr) await res.end(await QRCode.toBuffer(qr));
+				if (qr) {
+					console.log('QR Code generated for session:', id);
+					await res.end(await QRCode.toBuffer(qr));
+				}
 				if (connection == "open") {
+					console.log('WhatsApp connected successfully for session:', id);
 					await delay(50000);
 					let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
 					await delay(8000);
@@ -73,7 +75,6 @@ Welcome to a world of automation, power & freedom! 🚀💬
 🌍 Tech Tips | Bot News | Live Help  
 🔗  
 > https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u  
-
 > https://whatsapp.com/channel/0029VakSTEQGZNCk6CqE9E2P
 
 🌐 *Visit Our Official Website*  
@@ -99,7 +100,7 @@ Smart Tools | Instant Help | Cool Features
 
 🗝️ Old Version:  
 > https://github.com/Fred1e/LUCKY_MD  
-✨ Don’t forget to ⭐ Star & 🍴 Fork!
+✨ Don't forget to ⭐ Star & 🍴 Fork!
 
 ✅ Hosted Securely on *Heroku*
 
@@ -112,28 +113,28 @@ Smart Tools | Instant Help | Cool Features
 *FREDIETECH / FREDI AI™*
 
 *═════════════════════*`;
-	 await Qr_Code_By_Fredi_Ezra.sendMessage(Qr_Code_By_Fredi_Ezra.user.id,{text:LUCKY_MD_XFORCE_TEXT},{quoted:session})
-
-
+					await Qr_Code_By_Fredi_Ezra.sendMessage(Qr_Code_By_Fredi_Ezra.user.id,{text:LUCKY_MD_XFORCE_TEXT},{quoted:session})
 
 					await delay(100);
 					await Qr_Code_By_Fredi_Ezra.ws.close();
 					return await removeFile("temp/" + id);
 				} else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+					console.log('Connection closed, restarting...');
 					await delay(10000);
 					LUCKY_MD_XFORCE_QR_CODE();
 				}
 			});
 		} catch (err) {
+			console.error('Error in QR generation:', err);
 			if (!res.headersSent) {
 				await res.json({
 					code: "Service is Currently Unavailable"
 				});
 			}
-			console.log(err);
 			await removeFile("temp/" + id);
 		}
 	}
 	return await LUCKY_MD_XFORCE_QR_CODE()
 });
+
 module.exports = router
