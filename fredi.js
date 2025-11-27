@@ -7,7 +7,8 @@ let server = require('./frediqr'),
     code = require('./pair');
 require('events').EventEmitter.defaultMaxListeners = 500;
 
-app.use('/frediqr', server);
+// API Routes - for functionality
+app.use('/api/frediqr', server);  // ✅ Badilisha hii
 app.use('/code', code);
 
 // Serve HTML pages
@@ -15,7 +16,7 @@ app.use('/pair', async (req, res, next) => {
     res.sendFile(__path + '/fredipair.html')
 });
 
-app.use('/frediqr', async (req, res, next) => {
+app.use('/qr', async (req, res, next) => {  // ✅ Badilisha hii
     res.sendFile(__path + '/frediqr.html')
 });
 
@@ -35,7 +36,7 @@ app.listen(PORT, () => {
 ║  Server running on port: ${PORT}     ║
 ║  Main Dashboard: /               ║
 ║  Pair Dashboard: /pair           ║
-║  QR Dashboard: /frediqr               ║
+║  QR Dashboard: /qr               ║  ✅ Fixed
 ║                                  ║
 ║  Join our WhatsApp channel for   ║
 ║        more updates!             ║
