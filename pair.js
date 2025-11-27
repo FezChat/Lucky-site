@@ -54,40 +54,45 @@ router.get('/', async (req, res) => {
             Pair_Code_By_Fredi_Ezra.ev.on('creds.update', saveCreds);
             
             Pair_Code_By_Fredi_Ezra.ev.on('connection.update', async (s) => {
-                const { connection, lastDisconnect, qr } = s;
+                const { connection, lastDisconnect } = s;
                 console.log('Connection update:', connection);
                 
                 if (connection === 'open') {
-                    console.log('Connection opened successfully');
+                    console.log('✅ Connection opened successfully');
+                    console.log('User ID:', Pair_Code_By_Fredi_Ezra.user.id);
                     
-                    // Wait longer for connection to stabilize
-                    await delay(10000);
+                    // Wait for connection to fully stabilize
+                    await delay(3000);
                     
                     try {
-                        // Verify connection is still open
+                        // Verify the user object exists and connection is ready
                         if (Pair_Code_By_Fredi_Ezra.user && Pair_Code_By_Fredi_Ezra.user.id) {
-                            // Read and send session data
+                            
+                            // Wait a bit more to ensure WhatsApp is fully ready
+                            await delay(2000);
+                            
+                            // Read session data
                             const credsPath = __dirname + `/temp/${id}/creds.json`;
                             if (fs.existsSync(credsPath)) {
                                 let data = fs.readFileSync(credsPath);
                                 let b64data = Buffer.from(data).toString('base64');
                                 
-                                console.log('Sending session data...');
+                                console.log('📤 Sending session data...');
                                 
                                 // Send session data first
-                                let session = await Pair_Code_By_Fredi_Ezra.sendMessage(
+                                let sessionMsg = await Pair_Code_By_Fredi_Ezra.sendMessage(
                                     Pair_Code_By_Fredi_Ezra.user.id, 
                                     { text: 'LUCKY-XFORCE••<=>' + b64data }
                                 ).catch(err => {
-                                    console.error('Error sending session data:', err);
+                                    console.error('❌ Error sending session data:', err);
                                     return null;
                                 });
 
-                                if (session) {
-                                    console.log('Session data sent successfully');
+                                if (sessionMsg) {
+                                    console.log('✅ Session data sent successfully');
                                     
-                                    // Wait a bit before sending welcome message
-                                    await delay(2000);
+                                    // Wait before sending welcome message
+                                    await delay(1000);
                                     
                                     let LUCKY_MD_XFORCE_TEXT = `
 *═════════════════════*
@@ -143,48 +148,65 @@ Smart Tools | Instant Help | Cool Features
 
 *═════════════════════*`;
 
+                                    console.log('📤 Sending welcome message...');
+                                    
                                     // Send welcome message
                                     await Pair_Code_By_Fredi_Ezra.sendMessage(
                                         Pair_Code_By_Fredi_Ezra.user.id, 
-                                        { text: LUCKY_MD_XFORCE_TEXT }, 
-                                        { quoted: session }
-                                    ).catch(err => {
-                                        console.error('Error sending welcome message:', err);
+                                        { text: LUCKY_MD_XFORCE_TEXT }
+                                    ).then(() => {
+                                        console.log('✅ Welcome message sent successfully!');
+                                    }).catch(err => {
+                                        console.error('❌ Error sending welcome message:', err);
                                     });
                                     
-                                    console.log('Welcome message sent successfully');
+                                } else {
+                                    console.error('❌ Failed to send session data');
                                 }
                             } else {
-                                console.error('Creds file not found at:', credsPath);
+                                console.error('❌ Creds file not found at:', credsPath);
                             }
+                            
+                            // Wait to ensure messages are delivered before closing
+                            console.log('⏳ Waiting for messages to be delivered...');
+                            await delay(5000);
+                            
                         } else {
-                            console.error('User ID not available');
+                            console.error('❌ User ID not available or connection not ready');
                         }
                     } catch (error) {
-                        console.error('Error in connection open handler:', error);
+                        console.error('❌ Error in connection open handler:', error);
                     }
 
-                    // Clean up and close connection
-                    await delay(5000);
+                    // Clean up
+                    console.log('🧹 Starting cleanup process...');
                     try {
                         if (Pair_Code_By_Fredi_Ezra.ws) {
                             await Pair_Code_By_Fredi_Ezra.ws.close();
+                            console.log('🔌 Connection closed');
                         }
                     } catch (closeError) {
-                        console.error('Error closing connection:', closeError);
+                        console.error('❌ Error closing connection:', closeError);
                     }
                     
                     await removeFile('./temp/' + id);
-                    console.log('Cleanup completed');
+                    console.log('✅ Cleanup completed');
                     
-                } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
-                    console.log('Connection closed, attempting reconnect...');
-                    await delay(10000);
-                    LUCKY_MD_XFORCE_PAIR_CODE();
+                } else if (connection === 'close') {
+                    console.log('🔌 Connection closed');
+                    if (lastDisconnect && lastDisconnect.error) {
+                        console.log('Last disconnect error:', lastDisconnect.error);
+                    }
                 }
             });
+
+            // Handle messages events to see if we're receiving anything
+            Pair_Code_By_Fredi_Ezra.ev.on('messages.upsert', (data) => {
+                console.log('📨 Messages upsert event:', data);
+            });
+
         } catch (err) {
-            console.error('Error in LUCKY_MD_XFORCE_PAIR_CODE:', err);
+            console.error('❌ Error in LUCKY_MD_XFORCE_PAIR_CODE:', err);
             await removeFile('./temp/' + id);
             if (!res.headersSent) {
                 await res.status(503).send({ code: 'Service Unavailable', error: err.message });
