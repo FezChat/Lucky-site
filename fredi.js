@@ -8,7 +8,7 @@ let server = require('./frediqr'),
 require('events').EventEmitter.defaultMaxListeners = 500;
 
 // API Routes - for functionality
-app.use('/api/frediqr', server);  // ✅ Badilisha hii
+app.use('/frediqr', server);  // ✅ Badilisha hii
 app.use('/code', code);
 
 // Serve HTML pages
