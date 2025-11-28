@@ -1,14 +1,12 @@
 {
-    "description": "fredi-session",
+    "description": "frediezra",
     "main": "./fredi.js",
   "engines" : { 
     "npm" : ">=9.7.2",
     "node" : ">=20.0.0"
     },
     "scripts": {
-    "start": "pm2 start fredi.js --deep-monitoring --attach --name frediezra",
-    "stop": "pm2 stop frediezra",
-    "restart": "pm2 restart frediezra"
+    "start": "node fredi.js"
   },
  "author": "Fredi Ai",
   "license": "GPL-3.0 license",
