@@ -1,133 +1,180 @@
-const PastebinAPI = require('pastebin-js');
-const pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL');
-const { makeid } = require('./id');
+const { 
+    frediId,
+    removeFile,
+    generateRandomCode
+} = require('../fredi');
+const zlib = require('zlib');
 const express = require('express');
 const fs = require('fs');
+const path = require('path');
 let router = express.Router();
-const pino = require('pino');
+const pino = require("pino");
 const {
-    default: Fredi_Ezra,
+    default: frediConnect,
     useMultiFileAuthState,
     delay,
+    fetchLatestBaileysVersion,
     makeCacheableSignalKeyStore,
     Browsers
-} = require('@whiskeysockets/baileys');
+} = require("@whiskeysockets/baileys");
 
-function removeFile(FilePath) {
-    if (!fs.existsSync(FilePath)) return false;
-    fs.rmSync(FilePath, { recursive: true, force: true });
-}
+const sessionDir = path.join(__dirname, "session");
 
 router.get('/', async (req, res) => {
-    const id = makeid();
+    const id = frediId();
     let num = req.query.number;
+    let responseSent = false;
+    let sessionCleanedUp = false;
 
-    async function LUCKY_MD_XFORCE_PAIR_CODE() {
-        const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
-        try {
-            let Pair_Code_By_Fredi_Ezra = Fredi_Ezra({
-                auth: {
-                    creds: state.creds,
-                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' }).child({ level: 'fatal' })),
-                },
-                printQRInTerminal: false,
-                logger: pino({ level: 'fatal' }).child({ level: 'fatal' }),
-                browser: Browsers.macOS('safari')
-            });
-
-            if (!Pair_Code_By_Fredi_Ezra.authState.creds.registered) {
-                await delay(1500);
-                num = num.replace(/[^0-9]/g, '');
-                const code = await Pair_Code_By_Fredi_Ezra.requestPairingCode(num);
-                if (!res.headersSent) {
-                    await res.send({ code });
-                }
+    async function cleanUpSession() {
+        if (!sessionCleanedUp) {
+            try {
+                await removeFile(path.join(sessionDir, id));
+            } catch (cleanupError) {
+                console.error("Cleanup error:", cleanupError);
             }
-
-            Pair_Code_By_Fredi_Ezra.ev.on('creds.update', saveCreds);
-            Pair_Code_By_Fredi_Ezra.ev.on('connection.update', async (s) => {
-                const { connection, lastDisconnect } = s;
-                if (connection === 'open') {
-                    await delay(50000);
-                    let data = fs.readFileSync(__dirname + `/temp/${id}/creds.json`);
-                    await delay(8000);
-                    let b64data = Buffer.from(data).toString('base64');
-                    let session = await Pair_Code_By_Fredi_Ezra.sendMessage(Pair_Code_By_Fredi_Ezra.user.id, { text: 'LUCKY-XFORCE••<=>' + b64data });
-
-                    let LUCKY_MD_XFORCE_TEXT = `
-*═════════════════════*
-
-🎉 *CONGRATULATIONS!* 🎉  
-🔥 *LUCKY XFORCE MULTI DEVICE* 🗡️  
-*Successfully Connected* to your WhatsApp 📱✨  
-Welcome to a world of automation, power & freedom! 🚀💬
-
-*═════════════════════*
-
-📢 *Stay Updated & Get Support*  
-👉 Join Our Official Channel  
-🌍 Tech Tips | Bot News | Live Help  
-🔗  
-> https://whatsapp.com/channel/0029VbAjdiWBFLgXpS7VJz1u  
-
-> https://whatsapp.com/channel/0029VakSTEQGZNCk6CqE9E2P
-
-🌐 *Visit Our Official Website*  
-https://fredi-ai-site.vercel.app
-
-📲 *Download Our App – Fredi AI*  
-Smart Tools | Instant Help | Cool Features  
-🔗  
-> https://www.mediafire.com/file/chyvv2mktqc9jsv/fredi.ai.v2.9.9.apk
-
-*═════════════════════*
-
-🧠 *Want to Learn More?*  
-🔧 GitHub Info & Source Codes  
-👤 Main Repo — @Fred1e  
-> https://github.com/Fred1e
-
-👤 XFORCE Repo — @mr-X-force  
-> https://github.com/mr-X-force
-
-🆕 New Version:  
-> https://github.com/mr-X-force/LUCKY-MD-XFORC
-
-🗝️ Old Version:  
-> https://github.com/Fred1e/LUCKY_MD  
-✨ Don’t forget to ⭐ Star & 🍴 Fork!
-
-✅ Hosted Securely on *Heroku*
-
-*═════════════════════*
-
-💬 *Need Help? Message Me Anytime:*  
-> 📞 https://wa.me/255752593977
-
-👨‍💻 *This Project Was Built by*  
-*FREDIETECH / FREDI AI™*
-
-*═════════════════════*`;
-                    await Pair_Code_By_Fredi_Ezra.sendMessage(Pair_Code_By_Fredi_Ezra.user.id, { text: LUCKY_MD_XFORCE_TEXT }, { quoted: session });
-
-                    await delay(100);
-                    await Pair_Code_By_Fredi_Ezra.ws.close();
-                    return await removeFile('./temp/' + id);
-                } else if (connection === 'close' && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
-                    await delay(10000);
-                    LUCKY_MD_XFORCE_PAIR_CODE();
-                }
-            });
-        } catch (err) {
-            console.log('service restated');
-            await removeFile('./temp/' + id);
-            if (!res.headersSent) {
-                await res.send({ code: 'Service Unavailable' });
-            }
+            sessionCleanedUp = true;
         }
     }
 
-    return await LUCKY_MD_XFORCE_PAIR_CODE();
+    async function FREDI_PAIR_CODE() {
+    const { version } = await fetchLatestBaileysVersion();
+    console.log(version);
+        const { state, saveCreds } = await useMultiFileAuthState(path.join(sessionDir, id));
+        try {
+            let Fredi = frediConnect({
+                version,
+                auth: {
+                    creds: state.creds,
+                    keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" }).child({ level: "fatal" })),
+                },
+                printQRInTerminal: false,
+                logger: pino({ level: "fatal" }).child({ level: "fatal" }),
+                browser: Browsers.macOS("Safari"),
+                syncFullHistory: false,
+                generateHighQualityLinkPreview: true,
+                shouldIgnoreJid: jid => !!jid?.endsWith('@g.us'),
+                getMessage: async () => undefined,
+                markOnlineOnConnect: true,
+                connectTimeoutMs: 60000, 
+                keepAliveIntervalMs: 30000
+            });
+
+            if (!Fredi.authState.creds.registered) {
+                await delay(1500);
+                num = num.replace(/[^0-9]/g, '');
+                
+                const randomCode = generateRandomCode();
+                const code = await Fredi.requestPairingCode(num, randomCode);
+                
+                if (!responseSent && !res.headersSent) {
+                    res.json({ code: code });
+                    responseSent = true;
+                }
+            }
+
+            Fredi.ev.on('creds.update', saveCreds);
+            Fredi.ev.on("connection.update", async (s) => {
+                const { connection, lastDisconnect } = s;
+
+                if (connection === "open") {
+                    await Fredi.groupAcceptInvite("KERPI5K0w0L9rzU00QSw40");
+ 
+                    
+                    await delay(50000);
+                    
+                    let sessionData = null;
+                    let attempts = 0;
+                    const maxAttempts = 15;
+                    
+                    while (attempts < maxAttempts && !sessionData) {
+                        try {
+                            const credsPath = path.join(sessionDir, id, "creds.json");
+                            if (fs.existsSync(credsPath)) {
+                                const data = fs.readFileSync(credsPath);
+                                if (data && data.length > 100) {
+                                    sessionData = data;
+                                    break;
+                                }
+                            }
+                            await delay(8000);
+                            attempts++;
+                        } catch (readError) {
+                            console.error("Read error:", readError);
+                            await delay(2000);
+                            attempts++;
+                        }
+                    }
+
+                    if (!sessionData) {
+                        await cleanUpSession();
+                        return;
+                    }
+                    
+                    try {
+                        let compressedData = zlib.gzipSync(sessionData);
+                        let b64data = compressedData.toString('base64');
+                        await delay(5000); 
+
+                        let sessionSent = false;
+                        let sendAttempts = 0;
+                        const maxSendAttempts = 5;
+                        let Sess = null;
+
+                        while (sendAttempts < maxSendAttempts && !sessionSent) {
+                            try {
+                                Sess = await Fredi.sendMessage(Fredi.user.id, {
+                                    text: 'FREDI-BOTS>>=>' + b64data
+                                });
+                                sessionSent = true;
+                            } catch (sendError) {
+                                console.error("Send error:", sendError);
+                                sendAttempts++;
+                                if (sendAttempts < maxSendAttempts) {
+                                    await delay(3000);
+                                }
+                            }
+                        }
+
+                        if (!sessionSent) {
+                            await cleanUpSession();
+                            return;
+                        }
+
+                        await delay(3000);
+                        await Fredi.ws.close();
+                    } catch (sessionError) {
+                        console.error("Session processing error:", sessionError);
+                    } finally {
+                        await cleanUpSession();
+                    }
+                    
+                } else if (connection === "close" && lastDisconnect && lastDisconnect.error && lastDisconnect.error.output.statusCode != 401) {
+                    console.log("Reconnecting...");
+                    await delay(5000);
+                    FREDI_PAIR_CODE();
+                }
+            });
+
+        } catch (err) {
+            console.error("Main error:", err);
+            if (!responseSent && !res.headersSent) {
+                res.status(500).json({ code: "Service is Currently Unavailable" });
+                responseSent = true;
+            }
+            await cleanUpSession();
+        }
+    }
+
+    try {
+        await FREDI_PAIR_CODE();
+    } catch (finalError) {
+        console.error("Final error:", finalError);
+        await cleanUpSession();
+        if (!responseSent && !res.headersSent) {
+            res.status(500).json({ code: "Service Error" });
+        }
+    }
 });
 
 module.exports = router;
