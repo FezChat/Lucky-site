@@ -1,6 +1,6 @@
 const PastebinAPI = require('pastebin-js');
 const pastebin = new PastebinAPI('EMWTMkQAVfJa9kM-MRUrxd5Oku1U7pgL');
-const { makeid } = require('./id');
+const { makeid } = require('../fredi');
 const express = require('express');
 const fs = require('fs');
 let router = express.Router();
